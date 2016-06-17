@@ -1,0 +1,33 @@
+plugins {
+    id 'org.spongepowered.plugin' version '0.5.2'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'idea'
+}
+group 'flavor.pie'
+version '1.0.0'
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:4.1.0'
+    shadow ('com.github.pie-flavor:spongedataconversions:master-SNAPSHOT') {
+        setTransitive(false)
+    }
+}
+configurations {
+    compile.extendsFrom shadow
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+    }
+}
+shadowJar {
+    classifier = null
+    configurations = [project.configurations.shadow]
+}
+build.dependsOn shadowJar
